@@ -9,6 +9,10 @@ the dynamic graphs are analyzed using graph-theoretic measures from the BCT (Rub
 
 ## BCT Pipeline
 
+### Sample Data
+
+To ensure sufficient quality control, a sample dataset of artificial data was added to the scripts, which has a high degree of connectivity in one condition and a low degree of connectivity in another condition. The script for creating the artificial subject data are located in the "Data" subfolder.
+
 ### Compute rPLV
 
 In the first step, the input data, that has been epoched and transformed to phase space prior application, undergoes a connectivity analysis based on the relative phase-locking value (rPLV).
