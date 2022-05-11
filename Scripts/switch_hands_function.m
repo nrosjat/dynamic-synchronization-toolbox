@@ -7,7 +7,16 @@ function [rplv_flip] = switch_hands_function(rplv,conds,channels_new, channels_o
 % First step: Flipping right hand electrodes to left hand electrodes
 % electrode pairs to be switched defined in channels_new and channels_old
 % Second step: Averaging between left and right hand
-% Third step (optional): Contrasting between conditions defined in contrast
+%
+% Inputs:
+%   rplv - relative phase-locking value [time, frequency, channel, channel, conditions] 
+%   conds - number of experimental conditions (has to be even)
+%   channels_new - new order of channel labels
+%   channels_old - old order of channel labels
+%
+% Output:
+%   rplv_flip - rplv with swapped channel labels for every second
+%   condition), [time, frequency, channel, channel, conditions]
 %
 %--------------------------------------------------------------------------
         

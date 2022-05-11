@@ -4,7 +4,17 @@ function fixed_labels = fix_module_labels(M,interv)
 %--------------------------------------------------------------------------
 %----- Script for optimizing community numbering to minimize switches -----
 %--------------------------------------------------------------------------
+% Adjusts cluster labelling to match the closest previous cluster
 %
+% Inputs:
+%   interv - timeintervall for community detection
+%   M - cluster assignment matrix
+%
+% Output:
+%   fixed_labels - cluster assignment matrix with minimized artificial
+%   label switches between timepoints, i.e. cluster labels are assigned to
+%   match the most similar cluster from previous timepoints by random
+%   permutation of cluster labels.
 %--------------------------------------------------------------------------
 % Written by: 
 %

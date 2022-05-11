@@ -9,14 +9,20 @@ function [rplv,trials,rplv_mean] = func_rplv(subjects,options)
 %   options -multiple_conds, baseline, freqs, switch_hands, channels_new,
 %   channels_old, contrast, contrast_conds, averaging, avg_freqs
 %
-%   data - 'tph_sorted_M_lap_spmeeg_Epochs_stimulus_artefactfree_rm.mat'
+%   data - 'SubXX.mat'
 %        - dimensions (elecs, freqs, time, conditions)
+%
+% Outputs:
+%
+%   rplv - relative phase-locking value [time, channel, channel, conditions] 
+%   trials - number of trials in each condition for each subject
+%   rplv_mean - group average of rPLV [time, channel, channel, conditions]
 %--------------------------------------------------------------------------
 % Written by: 
 %
 % Nils Rosjat
 % INM-3, FZJ
-% Last edited: 31.03.2020
+% Last edited: 29.04.2022
 %--------------------------------------------------------------------------
 
 %% initialize options
@@ -29,8 +35,8 @@ channels_new = options.channels_new;
 channels_old = options.channels_old;
 contrast = options.contrast;
 contrast_conds = options.contrast_conds;
-averaging = options.averaging;
 avg_freqs = options.avg_freqs;
+symb = options.symb;
 
 %% initialize plv
 rplv = cell(size(subjects,1),1);
@@ -40,9 +46,9 @@ for sub=1:size(subjects,1)
 Ti=tic;
     disp(['Calculating PLV for ' subjects(sub,:)]);
     directory=subjects(sub,:);
-    load(['Data/' directory '/' directory '_eeg.mat'])
+    load(['Data' symb directory symb directory '_eeg.mat'])
     if multiple_conds
-        load(['Data/' directory '/' directory '_trialSelection.mat'])
+        load(['Data' symb directory symb directory '_trialSelection.mat'])
     else
         trialSelection = true(size(eegData,4),1);
     end
@@ -59,16 +65,12 @@ Ti=tic;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     if switch_hands
-        disp('Mapping right hand to left hand.')
-        if contrast
-            disp('Additionally computing the defined contrast')
-            [rplv{sub,1}]=switch_hands_function(rplv{sub,1},numConditions,channels_new,channels_old);
-        else
-            
-            [rplv{sub,1}]=switch_hands_function(rplv{sub,1},numConditions,channels_new,channels_old); 
-        end
+        disp('Mapping channels.')
+        [rplv{sub,1}]=switch_hands_function(rplv{sub,1},numConditions,channels_new,channels_old);
     end
     
+    %%% Contrasting two specified experimental conditions and append
+    %%% results as new dimension to rplv.
     if contrast
         disp('Contrast')
         try
@@ -82,10 +84,9 @@ Ti=tic;
     end
 
     
-    if averaging
-        disp(['Averaging from ' num2str(freqs(avg_freqs(1))) 'Hz to ' num2str(freqs(avg_freqs(end))) 'Hz.'])
-        [rplv{sub,1}] = average_rplv(rplv{sub,1},avg_freqs);
-    end
+    %%% Average phase-locking value over specified frequency band
+    disp(['Averaging from ' num2str(freqs(avg_freqs(1))) 'Hz to ' num2str(freqs(avg_freqs(end))) 'Hz.'])
+    [rplv{sub,1}] = average_rplv(rplv{sub,1},avg_freqs);
     
     clear eegData 
 
@@ -106,6 +107,6 @@ for i=1:size(rplv{1,1},4)
     for j=2:size(subjects,1)
         rplv_mean(:,:,:,i)=rplv_mean(:,:,:,i)+rplv{j,1}(:,:,:,i)/size(subjects,1);
     end
-% end
+
 
 end

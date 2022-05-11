@@ -10,6 +10,15 @@ function [sig_ti_FDR,xa,lengths] = stats_rplv(rplv,stats,rnd)
 %   channels_old, contrast, contrast_conds, averaging, avg_freqs
 %
 %   data - dimensions (elecs, freqs, time, conditions)
+%
+% Outputs:
+%   sig_ti_FDR - significant timepoints after statistics - cell [channel, channel]
+%   xa -cell [channel, channel], each channel pair contains a list of 
+%           significant intervals [#intervals, 3] - start, stop, timepoints
+%           gap to next interval
+%   lengths - length - cell [channel, channel], each channel pair contains a
+%         list of length of intervals
+%
 %--------------------------------------------------------------------------
 % Written by: 
 %
@@ -18,8 +27,6 @@ function [sig_ti_FDR,xa,lengths] = stats_rplv(rplv,stats,rnd)
 % Last edited: 03.04.2020
 %--------------------------------------------------------------------------
 
-% load('channels.mat')
-% channels_used = channels(1,1:61);
 
 if nargin<3
   rnd = 1;
@@ -58,10 +65,12 @@ interval=(time_int_start:time_int_end);     % define test timepoints
 
 %%% baseline matrix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% first extract baseline values%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 baseline_mat=cell(subs,1);
 for i=1:subs;
 baseline_mat{i,1}=squeeze(rplv{i,1}(baseline_int,:,:,task));
 end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% then calculate noise with baseline signature %%%%%%%%%%%%%%%%%%%%%%%%%%
 baseline_electrode=cell(elecs,elecs,1);
@@ -82,6 +91,7 @@ end
 
 %%% test matrix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% first extract test values %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 for i=1:subs
 data{i,1}=squeeze(rplv{i,1}(interval,:,:,task));
 end
@@ -96,9 +106,10 @@ for j=1:elecs
          mm{j,k,:}=ee;
     end
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ttest cued comparing to baseline
+
 pps=cell(elecs,elecs);
 hh=cell(elecs,elecs);
 for j=1:elecs

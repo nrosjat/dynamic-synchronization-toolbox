@@ -3,7 +3,18 @@ function clusters = community(graph, interv, elecs, con)
 %----- Script for doing community detection with louvain ------------------
 %--------------------------------------------------------------------------
 %
-% calls fix_module labels
+% Inputs:
+%   graph - graph settings
+%   interv - intervall for community detection
+%   elecs - number of electrodes
+%   con - dynamic connectivity matrix stored in cell {1,T}, T number of
+%   timepoints
+%
+% Outputs:
+%   clusters - [channel, timepoints] cluster assignment for each
+%         channel and timepoint
+%
+% Calls fix_module labels for reducing artificial cluster changes.
 %--------------------------------------------------------------------------
 % Written by: 
 %
@@ -18,10 +29,10 @@ ovr_pen = graph.pen;                %overall penalty for clusterlabel switches
 
 q = graph.clust_size;               % cluster size parameter (optimized for 0.9)
 
-M = zeros(elecs,size(interv,2));    % cluster membership matrix young
+M = zeros(elecs,size(interv,2));    % cluster membership matrix
 
 for t = 1:size(interv,2)
-    A = con{1,t};                   % load young connectivity matrix for time t
+    A = con{1,t};                   % load connectivity matrix for time t
     if t>1
         [M(:,t),Q] = community_louvain(A,q,M(:,t-1)); % Louvain clustering: use previous clusters as prior
     else
