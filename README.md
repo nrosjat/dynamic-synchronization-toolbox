@@ -1,17 +1,17 @@
-# Dynamic Connectivity Toolbox (DCT) 
+# Dynamic Synchronization Toolbox (DST) 
 
-This manual describes the usage of the Dynamic Connectivit Toolbox (DCT). 
+This manual describes the usage of the Dynamic Synchronization Toolbox (DST). 
 
 The toolbox presented here provides a MATLAB implementation of the pipeline for creating and graph theoretically analyzing dynamic networks as has been introduced in (Rosjat et al. (2021)).
 The pipeline consists of three major steps: First, phase-locking values between two measuring sites, e.g. electrodes, are computed relative to a defined baseline period, 
 second, the calculated connectivities are used to define dynamic graphs at the group level by testing for significant increase compared to baseline using t-tests and last, 
 the dynamic graphs are analyzed using graph-theoretic measures from the BCT (Rubinov et al. 2010).
 
-## BCT Pipeline
+## BST Pipeline
 
 ### Sample Data
 
-To ensure sufficient quality control, a sample dataset of artificial data was added to the scripts, which has a high degree of connectivity in one condition and a low degree of connectivity in another condition. The script for creating the artificial subject data are located in the "Data" subfolder.
+To ensure sufficient quality control, a sample dataset of artificial data was added to the scripts, which has a high degree of connectivity in one condition and a low degree of connectivity in another condition. The script for creating the artificial subject data are located in the "Data" subfolder. Execution of this file will create a sample subject suitable to run the full pipeline.
 
 ### Compute rPLV
 
@@ -59,6 +59,7 @@ In the last step the toolbox (optionally) computes a selection of graph theoreti
 
 Required options:
 
+-  graph.apply: False (Boolean for optional Graph Measures)
 -  graph.pen: inf (overall penalty for community detection algorithm)
 -  graph.clust_size: 0.9 (cluster size parameter for Louvain clustering)
 
@@ -68,7 +69,7 @@ For support, please open up an issue on github or get in contact with the author
 
 ## Licensing
 
-DPT is **BSD-licenced** (3 clause):
+DST is **BSD-licenced** (3 clause):
 
     This software is OSI Certified Open Source Software.
     OSI Certified is a certification mark of the Open Source Initiative.
