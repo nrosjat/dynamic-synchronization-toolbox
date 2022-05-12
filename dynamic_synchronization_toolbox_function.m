@@ -1,4 +1,4 @@
-function [rplv, trials, rplv_mean, sig_ti, xa, length, Agg, bet, hub, clusters, node_flex, deg] = dynamic_synchronization_toolbox_function(subjects,options, stats, graph)
+function [rplv, trials, rplv_mean, sig_ti, xa, length, Agg, bet, hub, clusters, node_flex, deg] = dynamic_synchronization_toolbox_function(subjects, data_path, options, stats, graph)
 
 %--------------------------------------------------------------------------
 %
@@ -109,23 +109,6 @@ function [rplv, trials, rplv_mean, sig_ti, xa, length, Agg, bet, hub, clusters, 
 %
 %--------------------------------------------------------------------------
 
-
-    
-main_path = pwd;
-
-if(isunix)   %just to use the right symbol for the path                                                                           
-    symb='/';
-    options.symb = symb;
-else
-    symb='\'; 
-    options.symb = symb;
-end 
-
-
-data_path = ([main_path symb 'Data' symb]);
-script_path = ([main_path symb 'Scripts' symb]);
-addpath(genpath(script_path));    
-    
 [rplv, trials,rplv_mean] = func_rplv(subjects,options);
 
 
@@ -136,4 +119,4 @@ if graph.apply
     [Agg, bet, hub, clusters, node_flex, deg] = graph_measures(xa,stats,graph);
 end
 
-end %clearvars -except rplv trials rplv_mean sig_ti xa length Agg bet hub clusters node_flex deg
+end 
