@@ -1,5 +1,21 @@
 %%% List of all subject ids
-    subjects=['Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01'];%'Sub02'];
+    subjects=['Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01'];
+
+%%% Data path
+    
+    % Sample datapath as subfolder of current working directory
+    main_path = pwd;
+
+    if(isunix)   %just to use the right symbol for the path                                                                           
+        symb='/';
+        options.symb = symb;
+    else
+        symb='\'; 
+        options.symb = symb;
+    end 
+
+
+    data_path = ([main_path symb 'Data' symb]);
 %%% List of electrodes of interest
     options.electrodes=[1:61];                      % all
 %%% Time-interval in ms
