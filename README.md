@@ -7,6 +7,10 @@ The pipeline consists of three major steps: First, phase-locking values between 
 second, the calculated connectivities are used to define dynamic graphs at the group level by testing for significant increase compared to baseline using t-tests and last, 
 the dynamic graphs are analyzed using graph-theoretic measures from the BCT (Rubinov et al. 2010).
 
+## Main Function
+
+The main function of the DST is the `dynamic_synchronization_toolbox_function.m` located in the root directory. To access the functions of this toolbox you need to add this function and the `Scripts` subfolder to your MATLAB path. This function requires a set of options to be defined beforehand. A file `sample_settings.m` provides the standard settings needed to run the scripts.
+
 ## BST Pipeline
 
 ### Sample Data
