@@ -117,6 +117,8 @@ function [rplv, trials, rplv_mean, sig_ti, xa, length, Agg, bet, hub, clusters, 
 
 if graph.apply
     [Agg, bet, hub, clusters, node_flex, deg] = graph_measures(xa,stats,graph);
+else
+    [Agg, bet, hub, clusters, node_flex, deg] = deal(NaN,NaN,NaN,NaN,NaN,NaN);
 end
 
 end 
