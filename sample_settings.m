@@ -1,6 +1,11 @@
 %%% List of all subject ids
     subjects=['Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01';'Sub01'];
 
+%%% Single- trial data
+    options.singleTrial = false;
+    options.windowWidth = 50;
+    options.stepSize = 10;
+    
 %%% Data path
     
     % Sample datapath as subfolder of current working directory
