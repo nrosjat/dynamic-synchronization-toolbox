@@ -109,9 +109,11 @@ function [rplv, trials, rplv_mean, sig_ti, xa, length, Agg, bet, hub, clusters, 
 %
 %--------------------------------------------------------------------------
 
-[rplv, trials,rplv_mean] = func_rplv(subjects,options);
-
-
+if options.singleTrial
+    [rplv, trials,rplv_mean] = func_single_rplv(subjects,options);
+else
+    [rplv, trials,rplv_mean] = func_rplv(subjects,options);
+end
 
 [sig_ti,xa,length] = stats_rplv(rplv,stats);
 
