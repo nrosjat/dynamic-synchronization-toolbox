@@ -164,7 +164,7 @@ for j=1:elecs
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[xa, lengths] = check_intervals(sig_ti_FDR,elecs);
+[xa, lengths] = check_intervals(sig_ti_FDR,elecs,stats);
 
 
 
